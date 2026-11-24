@@ -1,0 +1,2 @@
+model,correct_pairs,total_non_tied_pairs,pairwise_accuracy_pct
+spin_aware,5698,10271,55.47658455846558

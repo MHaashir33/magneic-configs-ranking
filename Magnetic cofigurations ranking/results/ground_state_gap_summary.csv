@@ -1,0 +1,2 @@
+model,n_parents,mean_gap_eV_atom,median_gap_eV_atom,fraction_gap_below_0.001_eV_atom_pct,fraction_gap_below_0.002_eV_atom_pct,fraction_gap_below_0.005_eV_atom_pct,fraction_gap_below_0.010_eV_atom_pct,fraction_gap_below_0.020_eV_atom_pct
+spin_aware,254,0.0014533932591406307,0.00024448312499991687,72.04724409448819,81.49606299212599,91.33858267716536,96.45669291338582,99.60629921259843

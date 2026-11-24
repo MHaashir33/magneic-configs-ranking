@@ -1,0 +1,12 @@
+{
+  "test_configurations": 2203,
+  "test_parents": 259,
+  "test_true_ground_states": 259,
+  "known_test_altermagnetic_ground_states": 55,
+  "top5_selected_states": 1198,
+  "one_dft_selected_state_per_parent": 259,
+  "preliminary_am_candidates_in_top5": 72,
+  "new_preliminary_candidates": 33,
+  "new_candidates_passing_spin_space_test": 24,
+  "note": "Counts depend on the newly trained 50-epoch model and package environment; the historical 22-candidate notebook output is stored separately under results/reference_outputs."
+}

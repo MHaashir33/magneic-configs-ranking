@@ -1,0 +1,5 @@
+model,energy_separation,correct_pairs,total_pairs,pairwise_accuracy_pct
+spin_aware,<1 meV,2838,5604,50.642398286937905
+spin_aware,1–5 meV,1445,2495,57.91583166332666
+spin_aware,5–10 meV,585,934,62.6338329764454
+spin_aware,>10 meV,830,1238,67.04361873990307

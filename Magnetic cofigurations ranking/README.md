@@ -1,0 +1,326 @@
+# Magnetic Configuration Ranking Using ALIGNN
+
+## Project Purpose
+
+This project investigates the use of machine learning to reduce the computational cost of identifying magnetic ground states through Density Functional Theory (DFT).
+
+Two ALIGNN models are trained and evaluated:
+
+- **Structure-only ALIGNN:** uses chemical and structural information.
+- **Spin-aware ALIGNN:** uses chemical features together with initial atomic magnetic moments.
+
+The models predict the energy above the DFT ground state for magnetic configurations. Configurations are ranked within each parent structure, and the Top-K predictions are evaluated against the actual DFT ground states.
+
+The main objectives are:
+
+1. Compare the predictive performance of structure-only and spin-aware ALIGNN.
+2. Evaluate Top-K ground-state recovery for K = 1, 2, 3, 5 and 10.
+3. Estimate the reduction in the number of DFT calculations using Top-K selection.
+4. Analyse energy regret, ground-state energy gaps and pairwise ranking accuracy.
+5. Apply preliminary magnetic-symmetry screening and stricter spin-space-symmetry analysis to identify candidate materials.
+6. Generate publication-quality figures summarising the results.
+
+The final screened materials are computational candidates requiring further DFT validation. Symmetry screening alone does not establish experimental synthesis or conclusively prove altermagnetism.
+
+## Dataset
+
+The project uses the magnetic-orderings database from:
+
+[https://github.com/ncfrey/magnetic-topological-materials](https://github.com/ncfrey/magnetic-topological-materials)
+
+Only the following dataset file is used:
+
+`magnetic-orderings-database-snapshot.part1.json.gz`
+
+Part 2 is not used in this workflow.
+
+The downloaded dataset is checked against the SHA-256 checksum stored in:
+
+`data/database_snapshot/SHA256SUMS.txt`
+
+## Requirements
+
+- Python 3.10 recommended.
+- PyTorch.
+- ALIGNN installed from the pinned Git revision.
+- A compatible NVIDIA CUDA-enabled GPU is recommended for faster training.
+- CPU execution is also supported, although training will be slower.
+
+A compatible PyTorch installation must be selected for the operating system and available hardware.
+
+## Installation
+
+Run the following commands from the repository root.
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/USERNAME/REPOSITORY.git
+cd REPOSITORY
+```
+
+To reproduce a particular published release:
+
+```bash
+git checkout v1.0.0
+```
+
+Replace the repository URL and tag with the actual published values.
+
+### 2. Create a Python environment
+
+Linux/macOS:
+
+```bash
+python3.10 -m venv .venv
+source .venv/bin/activate
+python -m pip install --upgrade pip setuptools wheel
+```
+
+Windows PowerShell:
+
+```powershell
+py -3.10 -m venv .venv
+.\.venv\Scripts\Activate.ps1
+python -m pip install --upgrade pip setuptools wheel
+```
+
+### 3. Install PyTorch and project dependencies
+
+Install a PyTorch version compatible with the computer's GPU or CPU:
+
+[https://pytorch.org/get-started/locally/](https://pytorch.org/get-started/locally/)
+
+Then install the project requirements:
+
+```bash
+python -m pip install -r requirements.txt
+python -m pip install -r requirements-alignn.txt
+```
+
+For a compatible environment matching the recorded package versions, the committed environment lock can also be installed:
+
+```bash
+python -m pip install -r environment-lock.txt
+```
+
+The environment lock records Python packages and software versions. Operating-system libraries, GPU drivers and hardware must still be compatible.
+
+## Dataset Download and Verification
+
+Download the dataset:
+
+```bash
+python scripts/00_download_part1.py
+```
+
+The dataset will be stored at:
+
+```text
+data/database_snapshot/
+    magnetic-orderings-database-snapshot.part1.json.gz
+```
+
+The downloader verifies the downloaded file against the committed SHA-256 checksum.
+
+If the checksum does not match, the download is rejected. Do not modify or recompress the original dataset file.
+
+## Training and Reproduction Workflow
+
+Execute the following steps in order from the repository root.
+
+### 1. Prepare the dataset
+
+```bash
+python scripts/01_prepare_data.py
+```
+
+This creates the processed magnetic-ordering dataset and the training, validation and test splits.
+
+Important outputs include:
+
+- `data/processed/magnetic_dataset_v1.pkl`
+- `data/processed/graph_df.pkl`
+- `data/processed/split_manifest.json`
+- `data/processed/preparation_summary.json`
+
+### 2. Build graph representations
+
+```bash
+python scripts/02_build_graphs.py
+```
+
+This generates the graph caches needed by the ALIGNN models.
+
+The graph caches are stored locally under:
+
+`data/graph_cache/`
+
+They are generated automatically and do not need to be downloaded from GitHub.
+
+### 3. Train both ALIGNN models
+
+```bash
+python scripts/03_train_models.py --epochs 50
+```
+
+This trains:
+
+- Structure-only ALIGNN baseline.
+- Spin-aware ALIGNN.
+
+Training generates the model weights locally under `models/`. These files are not included in the published Git repository and can be regenerated by running this command.
+
+Important training outputs:
+
+- `results/baseline_training_history.csv`
+- `results/spin_aware_training_history.csv`
+- `results/training_metrics.json`
+- `results/test_predictions_baseline.csv`
+- `results/test_predictions.csv`
+
+### 4. Perform candidate screening
+
+```bash
+python scripts/04_screen_candidates.py
+```
+
+This performs the preliminary magnetic-symmetry analysis followed by stricter spin-space-symmetry screening.
+
+Important outputs:
+
+- `results/top5_ml_candidates.csv`
+- `results/top5_dft_selected_states.csv`
+- `results/new_preliminary_candidates.csv`
+- `results/new_candidates_spin_space_test.csv`
+- `results/final_candidate_table.csv`
+- `results/final_screened_candidates.csv`
+- `results/screening_summary.json`
+
+The final candidate table contains the Task IDs, chemical formulas, model ranks and available symmetry information.
+
+### 5. Run Top-K and DFT-saving benchmarks
+
+```bash
+python scripts/05_run_benchmarks.py
+```
+
+This generates the main model evaluation and screening analysis.
+
+The analyses include:
+
+- Top-K ground-state recovery for both models.
+- Estimated DFT calculations per parent structure.
+- Estimated DFT-saving percentages.
+- Top-1 energy regret.
+- Ground-state energy-gap statistics.
+- Top-1 accuracy grouped by energy gap.
+- Pairwise ranking accuracy.
+- Spin-aware error analysis grouped by ordering-change status.
+- Preliminary versus strict screening counts.
+- Task-ID-level screening audit.
+
+Important outputs include:
+
+- `results/model_test_regression_metrics.csv`
+- `results/all_test_ground_state_TopK_DFT_benchmark.csv`
+- `results/structure_only_TopK_DFT_benchmark.csv`
+- `results/spin_aware_TopK_DFT_benchmark.csv`
+- `results/TopK_structure_only_vs_spin_aware_comparison.csv`
+- `results/Top1_energy_regret_summary.csv`
+- `results/ground_state_gap_summary.csv`
+- `results/pairwise_ranking_accuracy.csv`
+- `results/screening_funnel_counts.csv`
+- `results/screening_funnel_task_ids.csv`
+
+The DFT-saving values are retrospective benchmark estimates based on known DFT results. They estimate the computational workload of a Top-K strategy compared with evaluating every configuration.
+
+### 6. Generate publication-quality figures
+
+Install Matplotlib if required:
+
+```bash
+python -m pip install matplotlib
+```
+
+Generate the figures:
+
+```bash
+python scripts/07_generate_figures.py
+```
+
+All figures are saved in:
+
+`results/figures/`
+
+The script produces PDF, SVG and high-resolution PNG versions of the figures.
+
+### 7. Run tests
+
+```bash
+python -m pip install pytest
+PYTHONPATH=src python -m pytest -q
+```
+
+For Windows PowerShell:
+
+```powershell
+$env:PYTHONPATH = "src"
+python -m pytest -q
+```
+
+## Expected Output Files
+
+After completing the workflow, the principal outputs are:
+
+| Output                                             | Description                             |
+| -------------------------------------------------- | --------------------------------------- |
+| `baseline_training_history.csv`                    | Structure-only training history         |
+| `spin_aware_training_history.csv`                  | Spin-aware training history             |
+| `training_metrics.json`                            | Training and validation metrics         |
+| `model_test_regression_metrics.csv`                | Test MAE and RMSE                       |
+| `test_predictions_baseline.csv`                    | Baseline predictions                    |
+| `test_predictions.csv`                             | Spin-aware predictions                  |
+| `structure_only_TopK_DFT_benchmark.csv`            | Baseline Top-K benchmark                |
+| `spin_aware_TopK_DFT_benchmark.csv`                | Spin-aware Top-K benchmark              |
+| `TopK_structure_only_vs_spin_aware_comparison.csv` | Model comparison                        |
+| `Top1_energy_regret_summary.csv`                   | Energy-regret statistics                |
+| `ground_state_gap_summary.csv`                     | Ground-state gap statistics             |
+| `pairwise_ranking_accuracy.csv`                    | Pairwise ranking results                |
+| `screening_funnel_counts.csv`                      | Preliminary and strict screening counts |
+| `screening_funnel_task_ids.csv`                    | Task-ID-level screening audit           |
+| `final_screened_candidates.csv`                    | Final strict-screened candidate list    |
+| `results/figures/`                                 | Publication-quality figures             |
+
+The number of final candidates is determined by the actual model predictions and symmetry-screening results. It is not hard-coded.
+
+## Optional Release-Maintenance Script
+
+The script `scripts/06_capture_reproducibility.py` is an **optional release-maintenance script**, not part of the normal reproduction commands.
+
+It is intended for repository maintainers preparing a new release. After installing the final environment and downloading the dataset, a maintainer can run:
+
+```bash
+python scripts/06_capture_reproducibility.py
+```
+
+It generates or updates:
+
+- `environment-lock.txt`
+- `requirements-alignn.txt` with the pinned ALIGNN revision
+- `data/database_snapshot/SHA256SUMS.txt`
+- `data/processed/dataset_manifest.json`
+
+Researchers reproducing an existing release should use the already committed provenance files rather than running this maintenance script.
+
+## Scientific Interpretation
+
+The models estimate magnetic-configuration energies and prioritize configurations for further DFT evaluation.
+
+The preliminary magnetic-symmetry and strict spin-space-symmetry filters identify computational candidates. Their magnetic ground states, structural stability and spin-resolved electronic properties must be validated through appropriate DFT calculations before making definitive claims about altermagnetism.
+
+## Citation
+
+Please cite the repository using its published GitHub release and the references listed in `CITATION.md`.
+
+For reproducibility, report the published project tag, ALIGNN commit SHA and dataset SHA-256.

@@ -1,0 +1,24 @@
+# Python cache files
+__pycache__/
+*.py[cod]
+
+# Virtual environments
+.venv/
+venv/
+
+# Downloded raw dataset
+data/database_snapshot/*.json.gz
+
+# Regenerable graph caches
+data/graph_cache/
+
+# Regenerable processed intermediates
+data/processed/*.pkl
+data/processed/id_prop_*.csv
+data/processed/magnetic_dataset_v1.csv
+data/processed/graph_df_metadata.csv
+
+# Temporary files
+*.log
+*.tmp
+*.bak

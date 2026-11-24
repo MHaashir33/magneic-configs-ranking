@@ -1,0 +1,3 @@
+model,ordering_changed,n_configurations,MAE_eV_atom,RMSE_eV_atom,ground_state_correct,parents_in_group,ground_state_accuracy_pct
+spin_aware,False,1828,0.006991353140977761,0.013445528415096043,66,235,28.085106382978722
+spin_aware,True,375,0.01744694223954012,0.04185836005775385,36,73,49.31506849315068

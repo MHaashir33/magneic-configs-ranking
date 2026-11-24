@@ -1,0 +1,34 @@
+task_id,preliminary_compensated_PT_broken,strict_spin_space_pass,screening_outcome,formula,parent_structure_id,ML_rank,AM_type,compensated,net_moment,PT_preserved,spacegroup,dft_ordering,AM_type_preliminary,n_spin_ops,n_spin_flip_ops,spin_space_AM
+10424,True,True,Final screened candidate,Cs2LiMnO4,c09704c5a3cbebf823f642b7e035b2862c8a7c5eb7035ccb2f08bd6752bae4d5,4,S/A-type,True,0.0,False,Cmc2_1,AFM,S/A-type,8.0,3.0,True
+11073,True,True,Final screened candidate,Ca2MnO3,73f4bd37278a6a38b593e717339a0a86afd47520c569195eae00f4cc50513b9a,3,S-type,True,0.0,False,I4/mmm,AFM,S-type,16.0,6.0,True
+11704,True,True,Final screened candidate,LiVSiO4,21ebaa1b9a0f2515f98ce0fb7a4337d874656cdef0e5b5278402b1cf796a8d81,5,S/A-type,True,0.0,False,I-4,AFM,S/A-type,8.0,3.0,True
+13251,True,True,Final screened candidate,Co(IO3)2,da34197fc6027979dc4ab3106a3c324c7105618b346a01debd9eeb3b13bfbe37,2,S/A-type,True,0.0,False,P2_1,AFM,S/A-type,4.0,1.0,True
+13679,True,True,Final screened candidate,Mn(IO3)2,7e6f6611eec92036dc036610212e90f8ce34638de9fed87df0abbb728b2e413e,3,S/A-type,True,0.0,False,P2_1,AFM,S/A-type,4.0,1.0,True
+14652,True,False,Removed by strict spin-space symmetry,Ca3MnO4,5499c5f541b6f90d6596fd53a508f28b4f0117fb399c49881fa8c021ca97d94c,1,S-type,True,0.0,False,C2/m,AFM,,,,
+16085,True,True,Final screened candidate,Ba2Fe2O5,c4b6943f41c56eaa868ae46bbbd0ef341f28422113d2659c828083d804467bcc,5,S-type,True,0.0,False,P4/mmm,AFM,S-type,32.0,14.0,True
+19299,True,True,Final screened candidate,Sr2TiMnO6,5b2c4575906a9425d5b8a5424284ef775e28a3c81118ad244ee92084129df084,5,S-type,True,0.0,False,I4/m,AFM,S-type,8.0,2.0,True
+2122,True,True,Final screened candidate,Sr2MnWO6,7353cfdc609979cbbfe59301a78729f07473eb7576aa34dc4fa95104199a2784,3,S-type,True,0.0,False,P2_1/c,AFM,S-type,4.0,2.0,True
+2155,True,True,Final screened candidate,Sr2MnSbO6,7831aa276816a1da6d1c254d87af1a3e9e2c949364138c03e1a66dd4eba8bcd9,4,S/A-type,True,0.0,False,I4mm,AFM,S/A-type,4.0,1.0,True
+31341,True,True,Final screened candidate,VZn2O4,6bd858f396b22c6b26d15d57cdfd9396675ba9f6fac10fd06f013c7c3d32b8b0,1,S-type,True,0.0,False,Imma,AFM,S-type,8.0,2.0,True
+32678,True,True,Final screened candidate,LiCrSnO4,0448b1eaa7be7933adf68fe3e072fc226a55d6c89fc79d426c1912d78eac65f5,3,S/A-type,True,0.0,False,Imma,AFM,S/A-type,4.0,1.0,True
+32963,True,True,Final screened candidate,Li2Cr3BiO8,f1684e311e05adb8f4c1bfa854ff3ba924fd097b1c64878578bf9924577555a1,3,S-type,True,1.3530843112619095e-16,False,C2/c,FiM,S-type,4.0,2.0,True
+33877,True,True,Final screened candidate,CoH5CN(ClO)2,04cc4f9f56be07e7246735311948061e37779c4b9a8f2cf7848efb4ffeecd62b,3,S-type,True,0.0,False,C2/c,AFM,S-type,4.0,2.0,True
+36478,True,False,Removed by strict spin-space symmetry,Li3TiMn3O8,71cd5b50adbc48797b03b251464d88bfd76368ab9b8c13572d17712ba1ada7a3,5,S-type,True,2.8449465006019636e-16,False,P-1,FiM,,,,
+37093,True,False,Removed by strict spin-space symmetry,Li2SiNiO4,1335ae835b85cac9354d750d6202caee4bc14714989dd3f60477dc7966465b88,5,S/A-type,True,1.1449174941446927e-16,False,P1,AFM,,,,
+37898,True,True,Final screened candidate,Li4Y3FeO8,c5b942af1855dfa4270c38478d769e94938b918b2580f8063f9cd237fc601126,3,S/A-type,True,0.0,False,C222,AFM,S/A-type,8.0,3.0,True
+38389,True,True,Final screened candidate,Li4Ni3TeO8,3e129eba8b2ca319b9e8255f5c4d7b5d0bdd4ece23b5250ab7db0f29f78e6b13,4,S/A-type,True,0.0,False,R-3m,FiM,S/A-type,4.0,1.0,True
+38658,True,False,Removed by strict spin-space symmetry,Li3VP2HO8,746884b7168393d25898a6697a8737537dfc067f756f8c912b8012644838018d,1,S-type,True,0.0,False,P-1,AFM,,,,
+39392,True,False,Removed by strict spin-space symmetry,SrZnNi(PO4)2,f8d60071db1d7650d413a4feffa9b781c0b10ee16de1cdf4593593fbdae6baac,1,S-type,True,0.0,False,P-1,AFM,,,,
+4256,True,True,Final screened candidate,LiCrO2,819df99752ef38167adb7f1f4f3e9d3fcf5661017903c0e2f680d42287cdca58,2,S-type,True,0.0,False,P2_1/m,AFM,S-type,8.0,2.0,True
+44933,True,True,Final screened candidate,Ta2MnO6,e56f8da9db2fc40f44b74fb9dbcba2ca5a24806d3c01d4dd5effbf6aed7dfc9b,3,S/A-type,True,0.0,False,P4_2/mnm,AFM,S/A-type,8.0,3.0,True
+44966,True,False,Removed by strict spin-space symmetry,Li4CrO4,7c27fc17d55aac71c9143eec7f1be727128a853321a2ad75cf2ff04feef7f104,1,S-type,True,0.0,False,P-1,AFM,,,,
+47297,True,False,Removed by strict spin-space symmetry,Li4Ti2Mn3O10,9bdc651a2bc63ae1578d92dd5b5aeda830be9ff343cc33877f1c608208c28f7d,2,S-type,True,8.881784197001252e-16,False,P-1,AFM,,,,
+4924,True,True,Final screened candidate,FeCuO2,ab9bce210c52aa26bab4d805a88dae0e6a044df5171ca5405648b5ca2dbeeb68,1,S-type,True,0.0,False,R-3m,AFM,S-type,8.0,2.0,True
+50173,True,True,Final screened candidate,CaLaTiCrO6,d8d26b374de1c11638ba0d7620f6bbc2dbfb31affee09ef050c9f04921202766,4,S/A-type,True,0.0,False,Pc,AFM,S/A-type,4.0,1.0,True
+50460,True,False,Removed by strict spin-space symmetry,Li3Ni(SbO3)4,327bdefd7de287c816099a6efc1977cde36cc20a83fa5ac576ef3495431b094f,2,S/A-type,True,0.0,False,P1,AFM,,,,
+52295,True,False,Removed by strict spin-space symmetry,SrMn(GeO3)2,0f5565d0c48c229ab549efc48dd1361c336bb28c6697e7ccfd13939dc6add7a0,2,S-type,True,0.0,False,C2/c,AFM,,,,
+56534,True,True,Final screened candidate,Na6FeO4,3e6de35153e09542a954e9ca329cf11ff6411d1e57536a0982fab5e4c1fa93f4,3,S-type,True,0.0,False,P4_2/nmc,FiM,S-type,16.0,6.0,True
+5659,True,True,Final screened candidate,Sr2NiTeO6,5497dbf8cd951bb7d91511d8a460a1f144c03db73284335684546e3e625bac89,3,S-type,True,0.0,False,C2/m,AFM,S-type,8.0,2.0,True
+6112,True,True,Final screened candidate,Ni2P2O7,3dd018ce066394470e995a3218e3dad2c0e37227e5fffda87a1f3254928ae0fd,2,S-type,True,0.0,False,C2/m,AFM,S-type,8.0,2.0,True
+7605,True,True,Final screened candidate,Ba3Mn2O8,0c2d52183c38df88fee8ae11f97c4ed7a98349063c3b54c3dea0c06f7ca5a7ab,4,S-type,True,0.0,False,R-3m,AFM,S-type,8.0,2.0,True
+9705,True,True,Final screened candidate,Ba3Ta2NiO9,fe9a025dbbca17efc222c39370c505b78434c0251fc14d656512f4989537f27d,5,S-type,True,0.0,False,P-3m1,AFM,S-type,8.0,2.0,True
