@@ -1,0 +1,5 @@
+# capture_reproducibility.py pins this line to the exact commit used in the final run.
+git+https://github.com/atomgptlab/alignn.git@4de16a715a7769e8f40fbc71a528525fd6a7ff3b
+torch-geometric
+lmdb
+jarvis-tools

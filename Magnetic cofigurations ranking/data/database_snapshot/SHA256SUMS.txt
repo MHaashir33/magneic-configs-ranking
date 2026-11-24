@@ -1,0 +1,1 @@
+6c73e8653685a3c75875ea4147ad9dbfd2a2578f586adcbc92f85ec15ca98cc6  magnetic-orderings-database-snapshot.part1.json.gz

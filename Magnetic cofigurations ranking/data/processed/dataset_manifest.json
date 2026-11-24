@@ -1,0 +1,20 @@
+{
+  "source_repository": "https://github.com/ncfrey/magnetic-topological-materials",
+  "source_url": "https://raw.githubusercontent.com/ncfrey/magnetic-topological-materials/master/data/database_snapshot/magnetic-orderings-database-snapshot.part1.json.gz",
+  "dataset_file": "data/database_snapshot/magnetic-orderings-database-snapshot.part1.json.gz",
+  "sha256": "6c73e8653685a3c75875ea4147ad9dbfd2a2578f586adcbc92f85ec15ca98cc6",
+  "record_count": 23155,
+  "alignn_repository": "https://github.com/atomgptlab/alignn.git",
+  "alignn_commit": "4de16a715a7769e8f40fbc71a528525fd6a7ff3b",
+  "project_git_commit": "f86fbcd13afdb32eaf9f856d581bbed38bd1abc5",
+  "project_worktree_clean_before_capture": false,
+  "python": "3.13.16 (main, Oct  1 2026, 15:40:24) [GCC 13.3.0]",
+  "platform": "Linux-6.6.159+-x86_64-with-glibc2.39",
+  "pytorch": "2.14.1+cu130",
+  "pytorch_cuda_runtime": "13.0",
+  "cudnn": 92800,
+  "gpu_names": [
+    "Tesla T4"
+  ],
+  "captured_utc": "2026-11-24T08:42:27.633234+00:00"
+}
