@@ -1,13 +1,6 @@
 #!/usr/bin/env python3
-"""Generate publication-quality figures from the ALIGNN altermagnet project outputs.
+# Generate publication-quality figures from the ALIGNN altermagnet project outputs.
 
-Place this file at ``scripts/07_generate_figures.py`` and run from the repository
-root with ``python scripts/07_generate_figures.py``.
-
-The script only reads existing CSV/JSON outputs. It does not retrain models,
-change predictions, or modify benchmark tables. Missing optional inputs are
-reported and their figures are skipped.
-"""
 from __future__ import annotations
 
 import argparse
@@ -272,32 +265,103 @@ def plot_top1_regret(results: Path, out: Path, formats: list[str]) -> bool:
     save_figure(fig, out, "top1_energy_regret_distribution", formats)
     return True
 
+def plot_topk_recovery_grouped(
+    results: Path,
+    out: Path,
+    formats: list[str]
+) -> bool:
+    """Compare Top-1, Top-2, Top-3, Top-5 and Top-10 recovery."""
 
-def plot_gap_accuracy(results: Path, out: Path, formats: list[str]) -> bool:
-    df = read_csv(results, "Top1_accuracy_by_ground_state_gap.csv", ["gap_group", "top1_accuracy_pct"])
+    df = read_csv(
+        results,
+        "all_test_ground_state_TopK_DFT_benchmark.csv",
+        ["model", "Top_K", "ground_state_recovery_pct"]
+    )
+
     if df is None or df.empty:
         return False
-    if "model" in df.columns:
-        df = df.loc[df["model"].astype(str) == "spin_aware"]
-    if df.empty:
-        return False
-    order = ["<1 meV", "1–5 meV", "5–10 meV", ">10 meV"]
+
+    models = ["structure_only", "spin_aware"]
+    top_k_values = [1, 2, 3, 5, 10]
+
     df = df.copy()
-    df["_order"] = df["gap_group"].astype(str).map({v: i for i, v in enumerate(order)}).fillna(99)
-    df = df.sort_values("_order")
-    fig, ax = plt.subplots(figsize=(7.0, 4.6))
-    bars = ax.bar(df["gap_group"].astype(str), df["top1_accuracy_pct"], color=COLORS["spin_aware"], alpha=0.85)
-    if "parents" in df.columns:
-        labels = [f"{v:.1f}%\n(n={int(n)})" for v, n in zip(df["top1_accuracy_pct"], df["parents"])]
-    else:
-        labels = [f"{v:.1f}%" for v in df["top1_accuracy_pct"]]
-    ax.bar_label(bars, labels=labels, padding=3, fontsize=8)
-    ax.set_xlabel("DFT energy gap between ground and first excited state")
-    ax.set_ylabel("Top-1 ground-state accuracy (%)")
-    ax.set_ylim(0, max(100, float(df["top1_accuracy_pct"].max()) * 1.2))
-    ax.set_title("Top-1 accuracy versus ground-state energy gap")
+    df["Top_K"] = pd.to_numeric(df["Top_K"], errors="coerce")
+    df["ground_state_recovery_pct"] = pd.to_numeric(
+        df["ground_state_recovery_pct"], errors="coerce"
+    )
+
+    df = df[
+        df["model"].astype(str).isin(models)
+        & df["Top_K"].isin(top_k_values)
+    ]
+
+    if df.empty or df.duplicated(["model", "Top_K"]).any():
+        print("[SKIP] Missing or duplicate model/Top-K entries.")
+        return False
+
+    table = (
+        df.pivot(
+            index="model",
+            columns="Top_K",
+            values="ground_state_recovery_pct"
+        )
+        .reindex(index=models, columns=top_k_values)
+    )
+
+    if table.isna().any().any():
+        print("[SKIP] Missing Top-K recovery values.")
+        return False
+
+    x = np.arange(len(models))
+    width = 0.15
+
+    colors = {
+        1: "#1f77b4",
+        2: "#d62728",
+        3: "#ff7f0e",
+        5: "#2ca02c",
+        10: "#9467bd"
+    }
+
+    fig, ax = plt.subplots(figsize=(11, 6))
+
+    for i, k in enumerate(top_k_values):
+        values = table[k].to_numpy(dtype=float)
+
+        bars = ax.bar(
+            x + (i - 2) * width,
+            values,
+            width,
+            label=f"Top-{k}",
+            color=colors[k]
+        )
+
+        ax.bar_label(
+            bars,
+            fmt="%.1f",
+            padding=4,
+            fontsize=9
+        )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels(["Structure-only", "Spin-aware"])
+    ax.set_ylabel("Ground-state identification accuracy (%)")
+    ax.set_title("Structure-only vs Spin-aware ALIGNN")
+
+    ax.legend(loc="upper left", frameon=True)
+    ax.set_ylim(0, 100)
+    ax.grid(axis="y", alpha=0.25)
+    ax.set_axisbelow(True)
+
     fig.tight_layout()
-    save_figure(fig, out, "top1_accuracy_by_ground_state_gap", formats)
+
+    save_figure(
+        fig,
+        out,
+        "structure_only_vs_spin_aware_topk_accuracy",
+        formats
+    )
+
     return True
 
 
@@ -540,13 +604,13 @@ def main() -> None:
         ("Top-K recovery", lambda: plot_topk_recovery(results_dir, output_dir, formats)),
         ("DFT savings", lambda: plot_dft_savings(results_dir, output_dir, formats)),
         ("Energy regret", lambda: plot_top1_regret(results_dir, output_dir, formats)),
-        ("Gap versus accuracy", lambda: plot_gap_accuracy(results_dir, output_dir, formats)),
         ("Pairwise ranking", lambda: plot_pairwise_accuracy(results_dir, output_dir, formats)),
         ("Ordering-change diagnostics", lambda: plot_ordering_changed(results_dir, output_dir, formats)),
         ("Predicted versus DFT scatter", lambda: plot_prediction_scatter(results_dir, output_dir, formats)),
         ("Screening funnel", lambda: plot_screening_funnel(results_dir, output_dir, formats)),
         ("Final-candidate subtypes", lambda: plot_final_candidate_subtypes(results_dir, output_dir, formats)),
         ("Final-candidate energy gaps", lambda: plot_candidate_gap_distribution(results_dir, output_dir, formats)),
+        ("Grouped Top-K recovery", lambda: plot_topk_recovery_grouped(results_dir, output_dir, formats)),
     ]
     made = 0
     for label, function in generators:
