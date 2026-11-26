@@ -6,7 +6,7 @@ import pickle
 import numpy as np
 import pandas as pd
 
-K_VALUES = (1, 2, 3, 5, 10)
+K_VALUES = (1, 2, 3, 4, 5, 6, 7, 8)
 REGRET_THRESHOLDS = (0.001, 0.002, 0.005, 0.010, 0.020)
 GAP_BINS = (0.0, 0.001, 0.005, 0.010, np.inf)
 GAP_LABELS = ("<1 meV", "1–5 meV", "5–10 meV", ">10 meV")
