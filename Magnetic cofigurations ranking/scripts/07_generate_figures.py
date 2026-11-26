@@ -344,8 +344,8 @@ def plot_topk_recovery_grouped(
         )
 
     ax.set_xticks(x)
-    ax.set_xticklabels(["Structure-only", "Spin-aware"])
-    ax.set_ylabel("Ground-state identification accuracy (%)")
+    ax.set_xticklabels(["Structure-only", "Spin-aware"], fontsize=14)
+    ax.set_ylabel("Ground-state identification accuracy (%)", fontsize=14)
     ax.set_title("Structure-only vs Spin-aware ALIGNN")
 
     ax.legend(loc="upper left", frameon=True)
